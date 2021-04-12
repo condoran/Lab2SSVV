@@ -1,5 +1,7 @@
 package ssvv.noIdea;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import ssvv.noIdea.Exceptions.ValidatorException;
 import ssvv.noIdea.Repository.XMLFileRepository.NotaXMLRepo;
@@ -13,6 +15,7 @@ import ssvv.noIdea.Validator.StudentValidator;
 import ssvv.noIdea.Validator.TemaLabValidator;
 
 public class Lab4Tests {
+
     String id = "1", nume = "Nume", grupa = "12", email = "email@email.com", prof = "Prof";
     StudentValidator vs = new StudentValidator();
     StudentXMLRepo strepo = new StudentXMLRepo(vs, "StudentiXML.xml");
@@ -27,54 +30,63 @@ public class Lab4Tests {
     int max_int = Integer.MAX_VALUE;
     long max_plus_1 = ((long) max_int) + 1;
 
+    @Before
+    public void setup()
+    {
+        ntsrv.remove(Integer.parseInt(id));
+        tmsrv.remove(Integer.parseInt(id));
+        stsrv.remove(id);
+    }
+
     @Test
-    public void TestIdAddAssig() {
-        String[] params1 = {"", descr, saptLim, temenLim};
+    public void TestAddAssig() {
+        String[] params1 = {id, descr, saptLim, temenLim};
         try {
             tmsrv.add(params1);
-            assert (false);
-        } catch (Exception ex) {
             assert (true);
-        }
-        String[] params2 = {null, descr, saptLim, temenLim};
-        try {
-            tmsrv.add(params2);
-            assert (false);
         } catch (Exception ex) {
-            assert (true);
+            assert (false);
         }
     }
 
     @Test
-    public void TestMaxIntPlus1GroupAddStudent() {
-        String[] params2 = {id, nume, String.valueOf(max_plus_1), email, prof};
+    public void TestAddStudent() {
+        String[] params2 = {id, nume, grupa, email, prof};
         try {
             stsrv.add(params2);
-            assert (false);
-        } catch (ValidatorException ex) {
             assert (true);
+        } catch (ValidatorException ex) {
+            assert (false);
         }
     }
 
     @Test
-    public void TestWrongDateAddGrade()
+    public void TestAddGrade()
     {
-        String[] params={id,id,id,"8","10"};
+        String[] params={id,id,id,"8","2018-11-02T12:00"};
         try
         {
             ntsrv.add(params);
-            assert(false);
+            assert(true);
         }
         catch (Exception ex) {
-            assert (true);
+            assert (false);
         }
     }
 
     @Test
     public void TestAll()
     {
-        TestWrongDateAddGrade();
-        TestMaxIntPlus1GroupAddStudent();
-        TestIdAddAssig();
+        TestAddAssig();
+        TestAddStudent();
+        TestAddGrade();
+    }
+
+    @After
+    public void teardown()
+    {
+        ntsrv.remove(Integer.parseInt(id));
+        tmsrv.remove(Integer.parseInt(id));
+        stsrv.remove(id);
     }
 }
