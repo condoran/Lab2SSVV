@@ -1,14 +1,12 @@
 package ssvv.noIdea.Repository.TxtFileRepository;
 
 import ssvv.noIdea.Domain.HasId;
+import ssvv.noIdea.Exceptions.RepositoryException;
+import ssvv.noIdea.Exceptions.ValidatorException;
 import ssvv.noIdea.Repository.MemoryRepository.AbstractCrudRepo;
 import ssvv.noIdea.Validator.IValidator;
-import ssvv.noIdea.Exceptions.ValidatorException;
-import ssvv.noIdea.Exceptions.RepositoryException;
-import java.io.IOException;
-import java.io.*;
 
-import static com.sun.tools.classfile.Attribute.Exceptions;
+import java.io.*;
 
 public abstract class AbstractFileRepository<ID,E extends HasId<ID>> extends AbstractCrudRepo<ID,E> {
     private String filename;
