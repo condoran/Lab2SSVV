@@ -2,6 +2,7 @@ package ssvv.noIdea;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
 import org.junit.Test;
 import ssvv.noIdea.Exceptions.ValidatorException;
 import ssvv.noIdea.Repository.XMLFileRepository.StudentXMLRepo;
@@ -199,6 +200,5 @@ public class AppTest {
             assert (false);
         }
     }
-
 
 }
